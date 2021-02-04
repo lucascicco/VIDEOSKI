@@ -102,7 +102,7 @@ class _YoutubeRenderState extends State<YoutubeRender>
                         ),
                         Row(
                           children: <Widget>[
-                            Expanded(child: Text('Lista de favoritos')),
+                            Expanded(child: Text('Lista de adicionados')),
                             Observer(builder: (_) {
                               return RaisedButton(
                                   onPressed: () {

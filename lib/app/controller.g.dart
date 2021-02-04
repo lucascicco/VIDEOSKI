@@ -60,17 +60,6 @@ mixin _$VideoController on VideoBase, Store {
   }
 
   @override
-  void changeFavorite(Video video) {
-    final _$actionInfo = _$VideoBaseActionController.startAction(
-        name: 'VideoBase.changeFavorite');
-    try {
-      return super.changeFavorite(video);
-    } finally {
-      _$VideoBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 listVideos: ${listVideos}

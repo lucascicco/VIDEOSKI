@@ -26,12 +26,4 @@ abstract class VideoBase with Store {
   void removeVideo(Video video) {
     listVideos.removeWhere((element) => element.url == video.url);
   }
-
-  @action
-  void changeFavorite(Video video) {
-    int positionIndex =
-        listVideos.indexOf((element) => element.url == video.url);
-
-    listVideos[positionIndex].favorite = !listVideos[positionIndex].favorite;
-  }
 }
