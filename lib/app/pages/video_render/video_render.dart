@@ -58,6 +58,7 @@ class _YoutubeRenderState extends State<YoutubeRender>
   @override
   Widget build(BuildContext context) {
     final controller = GetIt.I.get<VideoController>();
+    bool allowed = controller.existingItem(currentVideo);
 
     YoutubePlayerController _controllerVideo = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(currentVideo.url),
@@ -84,12 +85,12 @@ class _YoutubeRenderState extends State<YoutubeRender>
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
+          print(constraints.maxHeight);
           if (constraints.maxHeight > constraints.maxWidth) {
             return Stack(
               children: <Widget>[
                 AnimatedPositioned(
                   top: _animationTwo ? 0 : constraints.maxHeight,
-                  curve: Curves.easeInOutQuint,
                   duration: Duration(seconds: 3),
                   child: Container(
                     height: constraints.maxHeight,
@@ -118,51 +119,38 @@ class _YoutubeRenderState extends State<YoutubeRender>
                             Expanded(
                                 child: Text('Últimas pesquisas',
                                     style: TextStyle(fontSize: 25))),
-                            Observer(builder: (_) {
-                              String text =
-                                  listOpen ? 'Esconder Lista' : 'Mostrar lista';
-
-                              return buttonCategory(
-                                  () => {
-                                        setState(() {
-                                          listOpen = !listOpen;
-                                        })
-                                      },
-                                  Icons.list,
-                                  text);
-                            }),
+                            buttonCategory(
+                                () => {
+                                      setState(() {
+                                        listOpen = !listOpen;
+                                      })
+                                    },
+                                Icons.list,
+                                listOpen ? 'Esconder Lista' : 'Mostrar lista'),
                             SizedBox(
                               width: 10,
                             ),
-                            Observer(
-                              builder: (_) {
-                                bool allowed =
-                                    controller.existingItem(currentVideo);
-
-                                Function callback = () => {
+                            buttonCategory(
+                                () => {
                                       allowed
                                           ? controller.removeVideo(currentVideo)
                                           : controller.addVideo(currentVideo)
-                                    };
-
-                                IconData icon =
-                                    allowed ? Icons.remove_circle : Icons.add;
-
-                                String text = allowed ? 'Remover' : 'Adicionar';
-
-                                return buttonCategory(callback, icon, text);
-                              },
-                            )
+                                    },
+                                allowed ? Icons.remove_circle : Icons.add,
+                                allowed ? 'Remover' : 'Adicionar')
                           ],
                         ),
+                        SizedBox(height: 20),
                         AnimatedContainer(
-                            height: listOpen ? constraints.maxHeight * 0.4 : 0,
-                            duration: Duration(seconds: 2),
+                            height: listOpen ? 200 : 0,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.blueAccent)),
+                            duration: Duration(milliseconds: 300),
                             child: Observer(builder: (_) {
                               return ListView.builder(
                                   itemCount: controller.listVideos.length,
-                                  itemBuilder: (ctx, index) => YoutubeWidget(
-                                      video: controller.listVideos[index]));
+                                  itemBuilder: (ctx, index) =>
+                                      Text(controller.listVideos[index].url));
                             }))
                       ]),
                     ),

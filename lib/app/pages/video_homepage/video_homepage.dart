@@ -19,13 +19,15 @@ class _VideoHomePageState extends State<VideoHomePage> {
   TextEditingController _addItemController = TextEditingController();
 
   int duration = 1;
-  bool animated = false;
+
+  bool animationType1 = false;
+  bool animationType2 = false;
 
   void toNext() async {
     Video video = Video(url: _addItemController.text);
 
     setState(() {
-      animated = true;
+      animationType1 = true;
     });
 
     controller.addVideo(video);
@@ -58,7 +60,7 @@ class _VideoHomePageState extends State<VideoHomePage> {
           return Stack(
             children: <Widget>[
               AnimatedPositioned(
-                top: animated ? constraits.maxHeight : 0,
+                top: animationType1 ? constraits.maxHeight : 0,
                 duration: Duration(seconds: duration),
                 curve: Curves.easeOut,
                 child: Container(
