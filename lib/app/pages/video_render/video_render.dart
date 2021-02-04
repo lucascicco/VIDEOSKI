@@ -45,6 +45,16 @@ class _YoutubeRenderState extends State<YoutubeRender>
     super.initState();
   }
 
+  Widget buttonCategory(Function callback, IconData icon, String text) {
+    return RaisedButton(
+        onPressed: callback,
+        color: Colors.white,
+        child: Column(children: <Widget>[
+          Icon(icon, color: Colors.black),
+          Text(text, style: TextStyle(color: Colors.black))
+        ]));
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = GetIt.I.get<VideoController>();
@@ -60,7 +70,7 @@ class _YoutubeRenderState extends State<YoutubeRender>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Icon(Icons.video_collection_sharp, color: Colors.red),
+            Icon(Icons.video_collection_sharp, color: Colors.white),
             SizedBox(width: 10),
             Text('Videoski')
           ],
@@ -100,39 +110,47 @@ class _YoutubeRenderState extends State<YoutubeRender>
                               playedColor: Colors.red,
                               handleColor: Colors.redAccent),
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: <Widget>[
-                            Expanded(child: Text('Lista de adicionados')),
+                            Expanded(
+                                child: Text('Últimas pesquisas',
+                                    style: TextStyle(fontSize: 25))),
                             Observer(builder: (_) {
-                              return RaisedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      listOpen = !listOpen;
-                                    });
-                                  },
-                                  child: Column(children: <Widget>[
-                                    Icon(Icons.list),
-                                    Text(listOpen
-                                        ? 'Esconder Lista'
-                                        : 'Mostrar lista')
-                                  ]));
+                              String text =
+                                  listOpen ? 'Esconder Lista' : 'Mostrar lista';
+
+                              return buttonCategory(
+                                  () => {
+                                        setState(() {
+                                          listOpen = !listOpen;
+                                        })
+                                      },
+                                  Icons.list,
+                                  text);
                             }),
+                            SizedBox(
+                              width: 10,
+                            ),
                             Observer(
                               builder: (_) {
-                                var allowed =
+                                bool allowed =
                                     controller.existingItem(currentVideo);
-                                return RaisedButton(
-                                    onPressed: () {
+
+                                Function callback = () => {
                                       allowed
                                           ? controller.removeVideo(currentVideo)
-                                          : controller.addVideo(currentVideo);
-                                    },
-                                    child: Column(children: <Widget>[
-                                      Icon(allowed
-                                          ? Icons.remove_circle
-                                          : Icons.add),
-                                      Text(allowed ? 'Remover' : 'Adicionar')
-                                    ]));
+                                          : controller.addVideo(currentVideo)
+                                    };
+
+                                IconData icon =
+                                    allowed ? Icons.remove_circle : Icons.add;
+
+                                String text = allowed ? 'Remover' : 'Adicionar';
+
+                                return buttonCategory(callback, icon, text);
                               },
                             )
                           ],

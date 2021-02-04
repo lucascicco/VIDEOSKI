@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:get_it/get_it.dart';
+import '../../controller.dart';
 import '../../models/video_model.dart';
 import '../video_render/video_render.dart';
 
@@ -12,19 +14,25 @@ class VideoHomePage extends StatefulWidget {
 }
 
 class _VideoHomePageState extends State<VideoHomePage> {
+  final controller = GetIt.I.get<VideoController>();
+
   TextEditingController _addItemController = TextEditingController();
 
   int duration = 1;
   bool animated = false;
 
   void toNext() async {
+    Video video = Video(url: _addItemController.text);
+
     setState(() {
       animated = true;
     });
 
+    controller.addVideo(video);
+
     await Future.delayed(Duration(seconds: duration), () {
-      Navigator.of(context).pushReplacementNamed(YoutubeRender.routeName,
-          arguments: Video(url: _addItemController.text));
+      Navigator.of(context)
+          .pushReplacementNamed(YoutubeRender.routeName, arguments: video);
     });
   }
 
@@ -81,10 +89,10 @@ class _VideoHomePageState extends State<VideoHomePage> {
                       decoration: InputDecoration(
                           labelStyle: TextStyle(color: Colors.white),
                           labelText: 'Link da URL',
-                          focusedBorder: new OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white)),
-                          border: new OutlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white)),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white)),
                           suffixIcon: GestureDetector(
                             child: Icon(Icons.add, size: 40, color: Colors.red),
                             onTap: () {

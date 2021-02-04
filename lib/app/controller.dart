@@ -7,7 +7,7 @@ class VideoController = VideoBase with _$VideoController;
 
 abstract class VideoBase with Store {
   @observable
-  ObservableList<Video> listVideos = [].asObservable();
+  ObservableList<Video> listVideos = <Video>[].asObservable();
 
   @action
   bool existingItem(Video video) {
