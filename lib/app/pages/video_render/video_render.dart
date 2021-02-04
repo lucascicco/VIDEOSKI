@@ -14,32 +14,20 @@ class YoutubeRender extends StatefulWidget {
 
 class _YoutubeRenderState extends State<YoutubeRender>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation _animation;
-
   bool _animationTwo = false;
 
   void startAnimation() async {
-    setState(() {
-      _animationTwo = true;
+    await Future.delayed(Duration(milliseconds: 200), () {
+      setState(() {
+        _animationTwo = true;
+      });
     });
-
-    _controller.forward();
   }
 
   @override
   void initState() {
-    _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 1));
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-
+    startAnimation();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -54,31 +42,42 @@ class _YoutubeRenderState extends State<YoutubeRender>
             Text('Videoski')
           ],
         ),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed('/');
+            }),
         backgroundColor: Colors.black,
       ),
       body: LayoutBuilder(
         builder: (context, constraits) {
-          return Container(
-            child: AnimatedPositioned(
-              top: _animationTwo ? 0 : constraits.maxHeight,
-              curve: Curves.easeInExpo,
-              duration: Duration(seconds: 3),
-              child: FadeTransition(
-                opacity: _animation,
-                child: YoutubePlayer(
-                  controller: YoutubePlayerController(
-                      initialVideoId:
-                          YoutubePlayer.convertUrlToId(widget.video.url),
-                      flags: YoutubePlayerFlags(
-                        autoPlay: false,
-                      )),
-                  showVideoProgressIndicator: true,
-                  progressIndicatorColor: Colors.blue,
-                  progressColors: ProgressBarColors(
-                      playedColor: Colors.blue, handleColor: Colors.blueAccent),
+          return Stack(
+            children: <Widget>[
+              AnimatedPositioned(
+                top: _animationTwo ? 0 : constraits.maxHeight,
+                curve: Curves.easeInOutQuint,
+                duration: Duration(seconds: 3),
+                child: Container(
+                  width: constraits.maxWidth,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: YoutubePlayer(
+                      controller: YoutubePlayerController(
+                          initialVideoId: YoutubePlayer.convertUrlToId(
+                              'https://youtu.be/h6BSKFAZ37E?list=RDh6BSKFAZ37E'),
+                          flags: YoutubePlayerFlags(
+                            autoPlay: false,
+                          )),
+                      showVideoProgressIndicator: true,
+                      progressIndicatorColor: Colors.red,
+                      progressColors: ProgressBarColors(
+                          playedColor: Colors.red,
+                          handleColor: Colors.redAccent),
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           );
         },
       ),
