@@ -12,13 +12,13 @@ mixin _$VideoController on VideoBase, Store {
   final _$listVideosAtom = Atom(name: 'VideoBase.listVideos');
 
   @override
-  ObservableList<dynamic> get listVideos {
+  ObservableList<Video> get listVideos {
     _$listVideosAtom.reportRead();
     return super.listVideos;
   }
 
   @override
-  set listVideos(ObservableList<dynamic> value) {
+  set listVideos(ObservableList<Video> value) {
     _$listVideosAtom.reportWrite(value, super.listVideos, () {
       super.listVideos = value;
     });

@@ -1,7 +1,12 @@
+import 'package:animationmusic/app/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:get_it/get_it.dart';
+import '../../models/video_model.dart';
+import '../video_render/video_render.dart';
 
 class VideoHomePage extends StatefulWidget {
+  static const routeName = '/';
   const VideoHomePage({Key key}) : super(key: key);
 
   @override
@@ -9,7 +14,24 @@ class VideoHomePage extends StatefulWidget {
 }
 
 class _VideoHomePageState extends State<VideoHomePage> {
+  final controller = GetIt.I<VideoController>();
+
   TextEditingController _addItemController = TextEditingController();
+
+  bool animated = false;
+
+  void toNext() async {
+    controller.addVideo(Video(url: _addItemController.text));
+
+    setState(() {
+      animated = true;
+    });
+
+    await Future.delayed(const Duration(milliseconds: 3), () {
+      Navigator.of(context).pushReplacementNamed(YoutubeRender.routeName,
+          arguments: Video(url: _addItemController.text));
+    });
+  }
 
   final utube =
       RegExp(r"^(https?\:\/\/)?((www\.)?youtube\.com|youtu\.?be)\/.+$");
@@ -28,17 +50,21 @@ class _VideoHomePageState extends State<VideoHomePage> {
         ),
         backgroundColor: Colors.black,
       ),
-      body: Container(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      body: LayoutBuilder(
+        builder: (context, constraits) {
+          return Container(
+            child: AnimatedPositioned(
+              curve: Curves.easeInExpo,
+              top: animated ? 0 : constraits.maxHeight,
+              duration: Duration(seconds: 3),
+              child: AnimatedContainer(
+                width: animated ? double.infinity : constraits.maxWidth * 0.4,
+                duration: Duration(seconds: 3),
                 child: TextField(
                   controller: _addItemController,
                   onEditingComplete: () {
                     if (utube.hasMatch(_addItemController.text)) {
-                      // start added
+                      toNext();
                     } else {
                       FocusScope.of(this.context).unfocus();
                       _addItemController.clear();
@@ -65,7 +91,7 @@ class _VideoHomePageState extends State<VideoHomePage> {
                         child: Icon(Icons.add, size: 40, color: Colors.red),
                         onTap: () {
                           if (utube.hasMatch(_addItemController.text)) {
-                            // active the animation //
+                            toNext();
                           } else {
                             FocusScope.of(this.context).unfocus();
                             _addItemController.clear();
@@ -83,7 +109,9 @@ class _VideoHomePageState extends State<VideoHomePage> {
                       )),
                 ),
               ),
-            ]),
+            ),
+          );
+        },
       ),
     );
   }
