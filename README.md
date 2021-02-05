@@ -1,4 +1,4 @@
-# VIDEOSKI MUSIC
+# VIDEOSKI APP
 
 Aplicativo de vídeo desenvolvido em Flutter com o intuito de permitir que o usuário acesse vídeos youtube através da plataforma com qualidade de resolução garantida. Nessa aplicação, fiz o uso de animações como os Widgets AnimatedContainer e AnimatedPositioned, o MobX para controlar o state junto com o GetIT para servir para injeção de dependência, especialmente do controller sobre os outros componentes na aplicação, o youtube_player_flutter foi usado para renderizar o vídeo pela URL do youtube. Eu usei o pacote HTTP para fazer requisições para certas API, principalmente uma do próprio youtube que retorna informação do vídeo através da URL do mesmo.
 
