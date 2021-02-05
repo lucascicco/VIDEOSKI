@@ -8,8 +8,8 @@ Video application developed in Flutter in order to allow the user to access yout
 
 <p align=center> 
     <span>
-        <img src="assets/gif1.gif" width=350 height=500/>
-        <img src="assets/gif2.gif" width=350 height=500/>
+        <img src="assets/gif1.gif" width=300 height=500/>
+        <img src="assets/gif2.gif" width=300 height=500/>
     </span>
 </p>
 
