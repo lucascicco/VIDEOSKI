@@ -41,13 +41,13 @@ class YoutubeWidget extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text('Erro ao carregar');
+            return Center(
+                child: Text('Erro ao carregar',
+                    style: TextStyle(color: Colors.white)));
           } else {
-            return SizedBox(
-              child: CircularProgressIndicator(),
-              width: 60,
-              height: 60,
-            );
+            return Center(
+                child: Text('Carregando...',
+                    style: TextStyle(color: Colors.white)));
           }
         });
   }

@@ -19,7 +19,7 @@ dependencies:
   http: ^0.12.2
   flushbar: ^1.10.4
   youtube_player_flutter: ^7.0.0+7
-  cupertino_icons: ^1.0.1
+  cupertino_icons: ^1.0.0
   animated_text_kit: ^3.1.0
   integration_test: ^1.0.2
 

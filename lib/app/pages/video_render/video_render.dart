@@ -1,5 +1,6 @@
 import 'package:animationmusic/app/models/video_model.dart';
 import 'package:animationmusic/app/widgets/video_item.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,9 @@ class _YoutubeRenderState extends State<YoutubeRender>
   Widget buttonCategory(Function callback, IconData icon, String text) {
     return ElevatedButton(
         onPressed: callback,
+        style: ElevatedButton.styleFrom(
+          primary: Colors.white, // background
+        ),
         child: Column(children: <Widget>[
           Icon(icon, color: Colors.black),
           Text(text, style: TextStyle(color: Colors.black))
@@ -69,9 +73,9 @@ class _YoutubeRenderState extends State<YoutubeRender>
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Icon(Icons.video_collection_sharp, color: Colors.white),
+            Icon(Icons.video_collection_sharp, color: Colors.red),
             SizedBox(width: 10),
-            Text('Videoski')
+            Text('Videoski Player')
           ],
         ),
         leading: IconButton(
@@ -116,39 +120,43 @@ class _YoutubeRenderState extends State<YoutubeRender>
                           children: <Widget>[
                             Expanded(
                                 child: Text('Últimas pesquisas',
+                                    textAlign: TextAlign.center,
                                     style: TextStyle(fontSize: 25))),
-                            buttonCategory(
-                                () => {
-                                      setState(() {
-                                        listOpen = !listOpen;
-                                      })
-                                    },
-                                Icons.list,
-                                listOpen ? 'Esconder Lista' : 'Mostrar lista'),
+                            Expanded(
+                              child: buttonCategory(
+                                  () => {
+                                        controller.listVideos.length == 0 &&
+                                                !listOpen
+                                            ? Flushbar(
+                                                title: 'Lista vazia',
+                                                message: 'Adicione um item.',
+                                                duration: Duration(seconds: 3),
+                                                icon: Icon(
+                                                  Icons.error_outline,
+                                                  color: Colors.black,
+                                                ),
+                                              ).show(context)
+                                            : setState(() {
+                                                listOpen = !listOpen;
+                                              })
+                                      },
+                                  Icons.list,
+                                  listOpen
+                                      ? 'Esconder Lista'
+                                      : 'Mostrar lista'),
+                            ),
                             SizedBox(
                               width: 10,
                             ),
-                            Observer(builder: (_) {
-                              bool allowed =
-                                  controller.existingItem(currentVideo);
-
-                              return buttonCategory(
-                                  () => {
-                                        allowed
-                                            ? controller
-                                                .removeVideo(currentVideo)
-                                            : controller.addVideo(currentVideo)
-                                      },
-                                  allowed ? Icons.remove_circle : Icons.add,
-                                  allowed ? 'Remover' : 'Adicionar');
-                            })
+                            buttonCategory(
+                                () => {controller.addVideo(currentVideo)},
+                                Icons.add,
+                                'Adicionar'),
                           ],
                         ),
                         SizedBox(height: 20),
                         AnimatedContainer(
                             height: listOpen ? 200 : 0,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.blueAccent)),
                             duration: Duration(milliseconds: 300),
                             child: Observer(builder: (_) {
                               return ListView.builder(

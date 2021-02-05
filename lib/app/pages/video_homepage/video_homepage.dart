@@ -22,7 +22,6 @@ class _VideoHomePageState extends State<VideoHomePage> {
   int duration = 1;
 
   bool animationType1 = false;
-  bool animationType2 = false;
 
   void toNext() async {
     Video video = Video(url: _addItemController.text);
@@ -120,21 +119,25 @@ class _VideoHomePageState extends State<VideoHomePage> {
                               },
                             )),
                       ),
-                      SizedBox(height: 20),
-                      SizedBox(
-                        width: constraits.maxWidth,
-                        child: TypewriterAnimatedTextKit(
-                          repeatForever: false,
-                          text: [
-                            "Veja seu vídeo youtube por aqui.",
-                          ],
-                          textStyle:
-                              TextStyle(fontSize: 30.0, fontFamily: "Agne"),
-                          textAlign: TextAlign.start,
-                          speed: Duration(milliseconds: 100),
-                          totalRepeatCount: 2,
-                        ),
-                      )
+                      SizedBox(height: constraits.maxHeight * 0.3),
+                      if (!animationType1)
+                        Container(
+                          width: constraits.maxWidth,
+                          margin: EdgeInsets.all(10),
+                          child: Center(
+                            child: TypewriterAnimatedTextKit(
+                              repeatForever: false,
+                              text: [
+                                "Veja seu vídeo youtube por aqui.",
+                              ],
+                              textStyle:
+                                  TextStyle(fontSize: 30.0, fontFamily: "Agne"),
+                              textAlign: TextAlign.start,
+                              speed: Duration(milliseconds: 100),
+                              totalRepeatCount: 2,
+                            ),
+                          ),
+                        )
                     ]),
                   ),
                 ),
