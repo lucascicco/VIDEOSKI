@@ -46,9 +46,8 @@ class _YoutubeRenderState extends State<YoutubeRender>
   }
 
   Widget buttonCategory(Function callback, IconData icon, String text) {
-    return RaisedButton(
+    return ElevatedButton(
         onPressed: callback,
-        color: Colors.white,
         child: Column(children: <Widget>[
           Icon(icon, color: Colors.black),
           Text(text, style: TextStyle(color: Colors.black))
@@ -154,8 +153,9 @@ class _YoutubeRenderState extends State<YoutubeRender>
                             child: Observer(builder: (_) {
                               return ListView.builder(
                                   itemCount: controller.listVideos.length,
-                                  itemBuilder: (ctx, index) =>
-                                      Text(controller.listVideos[index].url));
+                                  itemBuilder: (ctx, index) => YoutubeWidget(
+                                      video: controller.listVideos[index],
+                                      changeVideo: changeCurrentVideo));
                             }))
                       ]),
                     ),

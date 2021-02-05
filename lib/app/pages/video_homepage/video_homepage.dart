@@ -68,70 +68,77 @@ class _VideoHomePageState extends State<VideoHomePage> {
                   width: constraits.maxWidth,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: TextField(
-                      controller: _addItemController,
-                      onEditingComplete: () {
-                        if (utube.hasMatch(_addItemController.text)) {
-                          FocusScope.of(this.context).unfocus();
-                          toNext();
-                        } else {
-                          FocusScope.of(this.context).unfocus();
-                          _addItemController.clear();
-                          Flushbar(
-                            title: 'Link Inválido',
-                            message: 'Digite um link correto',
-                            duration: Duration(seconds: 3),
-                            icon: Icon(
-                              Icons.error_outline,
-                              color: Colors.black,
-                            ),
-                          )..show(context);
-                        }
-                      },
-                      style: TextStyle(fontSize: 18),
-                      decoration: InputDecoration(
-                          labelStyle: TextStyle(color: Colors.white),
-                          labelText: 'Link da URL',
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white)),
-                          suffixIcon: GestureDetector(
-                            child: Icon(Icons.add, size: 40, color: Colors.red),
-                            onTap: () {
-                              if (utube.hasMatch(_addItemController.text)) {
-                                FocusScope.of(this.context).unfocus();
-                                toNext();
-                              } else {
-                                FocusScope.of(this.context).unfocus();
-                                _addItemController.clear();
-                                Flushbar(
-                                  title: 'Link Inválido',
-                                  message: 'Digite um link correto',
-                                  duration: Duration(seconds: 3),
-                                  icon: Icon(
-                                    Icons.error_outline,
-                                    color: Colors.black,
-                                  ),
-                                )..show(context);
-                              }
-                            },
-                          )),
-                    ),
+                    child: Column(children: [
+                      TextField(
+                        controller: _addItemController,
+                        onEditingComplete: () {
+                          if (utube.hasMatch(_addItemController.text)) {
+                            FocusScope.of(this.context).unfocus();
+                            toNext();
+                          } else {
+                            FocusScope.of(this.context).unfocus();
+                            _addItemController.clear();
+                            Flushbar(
+                              title: 'Link Inválido',
+                              message: 'Digite um link correto',
+                              duration: Duration(seconds: 3),
+                              icon: Icon(
+                                Icons.error_outline,
+                                color: Colors.black,
+                              ),
+                            )..show(context);
+                          }
+                        },
+                        style: TextStyle(fontSize: 18),
+                        decoration: InputDecoration(
+                            labelStyle: TextStyle(color: Colors.white),
+                            labelText: 'Link da URL',
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            border: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white)),
+                            suffixIcon: GestureDetector(
+                              child:
+                                  Icon(Icons.add, size: 40, color: Colors.red),
+                              onTap: () {
+                                if (utube.hasMatch(_addItemController.text)) {
+                                  FocusScope.of(this.context).unfocus();
+                                  toNext();
+                                } else {
+                                  FocusScope.of(this.context).unfocus();
+                                  _addItemController.clear();
+                                  Flushbar(
+                                    title: 'Link Inválido',
+                                    message: 'Digite um link correto',
+                                    duration: Duration(seconds: 3),
+                                    icon: Icon(
+                                      Icons.error_outline,
+                                      color: Colors.black,
+                                    ),
+                                  )..show(context);
+                                }
+                              },
+                            )),
+                      ),
+                      SizedBox(height: 20),
+                      SizedBox(
+                        width: constraits.maxWidth,
+                        child: TypewriterAnimatedTextKit(
+                          repeatForever: false,
+                          text: [
+                            "Veja seu vídeo youtube por aqui.",
+                          ],
+                          textStyle:
+                              TextStyle(fontSize: 30.0, fontFamily: "Agne"),
+                          textAlign: TextAlign.start,
+                          speed: Duration(milliseconds: 100),
+                          totalRepeatCount: 2,
+                        ),
+                      )
+                    ]),
                   ),
                 ),
               ),
-              SizedBox(
-                width: constraits.maxWidth,
-                child: TypewriterAnimatedTextKit(
-                  text: [
-                    "Veja seu vídeo youtube por aqui.",
-                  ],
-                  textStyle: TextStyle(fontSize: 30.0, fontFamily: "Agne"),
-                  textAlign: TextAlign.start,
-                  speed: Duration(seconds: 5),
-                ),
-              )
             ],
           );
         },
