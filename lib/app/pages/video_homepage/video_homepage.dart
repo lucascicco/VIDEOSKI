@@ -30,12 +30,7 @@ class _VideoHomePageState extends State<VideoHomePage> {
       animationType1 = true;
     });
 
-    controller.addVideo(video, () {
-      FlushBarAlert(
-        title: 'Falha ao adicionar',
-        message: 'Item já existe na lista',
-      );
-    });
+    controller.addVideo(video);
 
     await Future.delayed(Duration(seconds: duration), () {
       Navigator.of(context)
@@ -49,6 +44,7 @@ class _VideoHomePageState extends State<VideoHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,

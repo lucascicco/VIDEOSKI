@@ -23,7 +23,7 @@ class YoutubeWidget extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return GestureDetector(
-              onTap: () => changeVideo(video),
+              onTap: changeVideo,
               child: Card(
                 elevation: 5,
                 margin: EdgeInsets.symmetric(

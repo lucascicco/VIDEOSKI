@@ -10,11 +10,15 @@ abstract class VideoBase with Store {
   ObservableList<Video> listVideos = <Video>[].asObservable();
 
   @action
-  void addVideo(Video video, Function callback) {
-    if (!listVideos.contains(video)) {
+  void addVideo(Video video) {
+    bool addAllowed = listVideos
+            .where((element) => element.url == video.url)
+            .toList()
+            .length >
+        0;
+
+    if (!addAllowed) {
       listVideos.add(video);
-    } else {
-      callback();
     }
   }
 

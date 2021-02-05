@@ -27,11 +27,11 @@ mixin _$VideoController on VideoBase, Store {
   final _$VideoBaseActionController = ActionController(name: 'VideoBase');
 
   @override
-  void addVideo(Video video, Function callback) {
+  void addVideo(Video video) {
     final _$actionInfo =
         _$VideoBaseActionController.startAction(name: 'VideoBase.addVideo');
     try {
-      return super.addVideo(video, callback);
+      return super.addVideo(video);
     } finally {
       _$VideoBaseActionController.endAction(_$actionInfo);
     }
