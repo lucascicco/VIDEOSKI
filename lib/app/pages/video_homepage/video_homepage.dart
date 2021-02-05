@@ -1,5 +1,5 @@
+import 'package:animationmusic/app/widgets/alert_flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:get_it/get_it.dart';
 import '../../controller.dart';
 import '../../models/video_model.dart';
@@ -30,7 +30,12 @@ class _VideoHomePageState extends State<VideoHomePage> {
       animationType1 = true;
     });
 
-    controller.addVideo(video);
+    controller.addVideo(video, () {
+      FlushBarAlert(
+        title: 'Falha ao adicionar',
+        message: 'Item já existe na lista',
+      );
+    });
 
     await Future.delayed(Duration(seconds: duration), () {
       Navigator.of(context)
@@ -77,15 +82,10 @@ class _VideoHomePageState extends State<VideoHomePage> {
                           } else {
                             FocusScope.of(this.context).unfocus();
                             _addItemController.clear();
-                            Flushbar(
+                            FlushBarAlert(
                               title: 'Link Inválido',
                               message: 'Digite um link correto',
-                              duration: Duration(seconds: 3),
-                              icon: Icon(
-                                Icons.error_outline,
-                                color: Colors.black,
-                              ),
-                            )..show(context);
+                            );
                           }
                         },
                         style: TextStyle(fontSize: 18),
@@ -106,15 +106,10 @@ class _VideoHomePageState extends State<VideoHomePage> {
                                 } else {
                                   FocusScope.of(this.context).unfocus();
                                   _addItemController.clear();
-                                  Flushbar(
+                                  FlushBarAlert(
                                     title: 'Link Inválido',
                                     message: 'Digite um link correto',
-                                    duration: Duration(seconds: 3),
-                                    icon: Icon(
-                                      Icons.error_outline,
-                                      color: Colors.black,
-                                    ),
-                                  )..show(context);
+                                  );
                                 }
                               },
                             )),

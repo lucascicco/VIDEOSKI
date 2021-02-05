@@ -1,6 +1,6 @@
 import 'package:animationmusic/app/models/video_model.dart';
+import 'package:animationmusic/app/widgets/alert_flushbar.dart';
 import 'package:animationmusic/app/widgets/video_item.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
@@ -127,15 +127,10 @@ class _YoutubeRenderState extends State<YoutubeRender>
                                   () => {
                                         controller.listVideos.length == 0 &&
                                                 !listOpen
-                                            ? Flushbar(
+                                            ? FlushBarAlert(
                                                 title: 'Lista vazia',
                                                 message: 'Adicione um item.',
-                                                duration: Duration(seconds: 3),
-                                                icon: Icon(
-                                                  Icons.error_outline,
-                                                  color: Colors.black,
-                                                ),
-                                              ).show(context)
+                                              )
                                             : setState(() {
                                                 listOpen = !listOpen;
                                               })
@@ -149,7 +144,14 @@ class _YoutubeRenderState extends State<YoutubeRender>
                               width: 10,
                             ),
                             buttonCategory(
-                                () => {controller.addVideo(currentVideo)},
+                                () => {
+                                      controller.addVideo(currentVideo, () {
+                                        FlushBarAlert(
+                                          title: 'Falha ao adicionar',
+                                          message: 'Item já existe na lista.',
+                                        );
+                                      })
+                                    },
                                 Icons.add,
                                 'Adicionar'),
                           ],
