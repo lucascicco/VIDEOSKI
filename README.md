@@ -6,5 +6,31 @@ Music application developed in Flutter in order to allow the user to access yout
 
 # SCREENSHOTS - CAPTURAS DE TELA
 
+<p align=center> 
+    <span>
+        <img src="assets/gif1.gif" width=350 height=500/>
+        <img src="assets/gif2.gif" width=350 height=500/>
+    </span>
+</p>
 
+# LIBRARIES - BIBLIOTECAS
 
+- flutter
+- mobx
+- flutter_mobx
+- get_it
+- http
+- youtube_player_flutter
+- animated_text_kit
+- flushbar
+- mobx_codegen
+- build_runner
+
+<hr>
+
+Desevolvido por,
+
+Developed by,
+
+lucascicco.
+ 
