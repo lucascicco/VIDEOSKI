@@ -110,7 +110,7 @@ class _VideoHomePageState extends State<VideoHomePage> {
                               },
                             )),
                       ),
-                      SizedBox(height: constraits.maxHeight * 0.3),
+                      SizedBox(height: constraits.maxHeight * 0.1),
                       if (!animationType1)
                         Container(
                           width: constraits.maxWidth,

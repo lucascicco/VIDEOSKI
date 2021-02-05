@@ -13,8 +13,6 @@ void main() {
   runApp(MyApp());
 }
 
-//https://youtu.be/h6BSKFAZ37E?list=RDh6BSKFAZ37E
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
