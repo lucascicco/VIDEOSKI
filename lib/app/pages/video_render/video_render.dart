@@ -6,7 +6,6 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../controller.dart';
-import 'package:video_player/video_player.dart';
 
 class YoutubeRender extends StatefulWidget {
   static String routeName = '/video';
