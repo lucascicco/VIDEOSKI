@@ -58,7 +58,6 @@ class _YoutubeRenderState extends State<YoutubeRender>
   @override
   Widget build(BuildContext context) {
     final controller = GetIt.I.get<VideoController>();
-    bool allowed = controller.existingItem(currentVideo);
 
     YoutubePlayerController _controllerVideo = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(currentVideo.url),
@@ -130,14 +129,20 @@ class _YoutubeRenderState extends State<YoutubeRender>
                             SizedBox(
                               width: 10,
                             ),
-                            buttonCategory(
-                                () => {
-                                      allowed
-                                          ? controller.removeVideo(currentVideo)
-                                          : controller.addVideo(currentVideo)
-                                    },
-                                allowed ? Icons.remove_circle : Icons.add,
-                                allowed ? 'Remover' : 'Adicionar')
+                            Observer(builder: (_) {
+                              bool allowed =
+                                  controller.existingItem(currentVideo);
+
+                              return buttonCategory(
+                                  () => {
+                                        allowed
+                                            ? controller
+                                                .removeVideo(currentVideo)
+                                            : controller.addVideo(currentVideo)
+                                      },
+                                  allowed ? Icons.remove_circle : Icons.add,
+                                  allowed ? 'Remover' : 'Adicionar');
+                            })
                           ],
                         ),
                         SizedBox(height: 20),

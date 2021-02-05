@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import '../../controller.dart';
 import '../../models/video_model.dart';
 import '../video_render/video_render.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 class VideoHomePage extends StatefulWidget {
   static const routeName = '/';
@@ -118,6 +119,17 @@ class _VideoHomePageState extends State<VideoHomePage> {
                           )),
                     ),
                   ),
+                ),
+              ),
+              SizedBox(
+                width: constraits.maxWidth,
+                child: TypewriterAnimatedTextKit(
+                  text: [
+                    "Veja seu vídeo youtube por aqui.",
+                  ],
+                  textStyle: TextStyle(fontSize: 30.0, fontFamily: "Agne"),
+                  textAlign: TextAlign.start,
+                  speed: Duration(seconds: 5),
                 ),
               )
             ],
